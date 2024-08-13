@@ -15,23 +15,24 @@ public struct CustomCalendar: View {
     public let calendar: Calendar
     public let isRangeSelection: Bool
     public let headerbackGround: Color
-    public let onRangeSelected: (Date?, Date?) -> Void
     public let onDone: (Date?, Date?) -> Void // Closure for done action
     public let onCancel: () -> Void // Closure for cancel action
 
     public init(
+        selectedStartDate: Date = Date(),
+        selectedEndDate: Date? = nil,
         themeColor: Color = .pink,
         isRangeSelection: Bool,
         calendar: Calendar = .current,
         headerbackGround: Color = Color.pink.opacity(0.1),
-        onRangeSelected: @escaping (Date?, Date?) -> Void,
         onDone: @escaping (Date?, Date?) -> Void, // Initialize done action
         onCancel: @escaping () -> Void // Initialize cancel action
     ) {
+        self.selectedStartDate = selectedStartDate
+        self.selectedEndDate = selectedEndDate
         self.themeColor = themeColor
         self.calendar = calendar
         self.headerbackGround = headerbackGround
-        self.onRangeSelected = onRangeSelected
         self.onDone = onDone
         self.onCancel = onCancel
         self.isRangeSelection = isRangeSelection
@@ -43,11 +44,10 @@ public struct CustomCalendar: View {
             DaysOfWeekView(themeColor: themeColor, calendar: calendar)
             MonthView(
                 selectedStartDate: $selectedStartDate,
-                selectedEndDate: $selectedEndDate, 
+                selectedEndDate: $selectedEndDate,
                 isRangeSelection: isRangeSelection,
                 calendar: calendar,
-                themeColor: themeColor,
-                onRangeSelected: onRangeSelected
+                themeColor: themeColor
             )
             .padding()
 
@@ -126,6 +126,27 @@ public struct CustomCalendar: View {
     }
 }*/
 
+//
+
+//struct ContentView1: View {
+//    var body: some View {
+//        CustomCalendar(isRangeSelection: false,
+//            onDone: { startDate, endDate in
+//                if let start = startDate, let end = endDate {
+//                    print("Selected range is from \(start) to \(end)")
+//                } else if let start = startDate {
+//                    print("Selected start date is \(start)")
+//                } else {
+//                    print("No date selected")
+//                }
+//            },
+//            onCancel: {
+//                print("Selection canceled")
+//                // Perform actions when "Cancel" is pressed, such as resetting the selection
+//            }
+//        )
+//    }
+//}
 //
 //#Preview {
 //    ContentView1()
